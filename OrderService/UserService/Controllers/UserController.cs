@@ -13,6 +13,27 @@ namespace UserService.Controllers
             new User { Id = 2, Name = "Jane Smith", Email = "jane@example.com" }
         };
 
+        [HttpPost]
+        public ActionResult<User> CreateUser([FromBody] User newUser)
+        {
+            if (newUser == null)
+            {
+                return BadRequest("User cannot be null.");
+            }
+
+          
+
+            
+            newUser.Id = Users.Any() ? Users.Max(u => u.Id) + 1 : 1;
+
+           
+            Users.Add(newUser);
+
+           
+            return CreatedAtAction(nameof(GetUser), new { id = newUser.Id }, newUser);
+        }
+
+
         [HttpGet("{id}")]
         public ActionResult<User> GetUser(int id)
         {

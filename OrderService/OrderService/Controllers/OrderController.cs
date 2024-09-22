@@ -7,8 +7,8 @@ using System.Text.Json;
 public class OrderController : ControllerBase
 {
     private readonly IHttpClientFactory _httpClientFactory;
-    private readonly string _userServiceUrl = "https://localhost:7005/api/user";
-    private readonly string _productServiceUrl = "https://localhost:7214/api/product";
+    private readonly string _userServiceUrl = "https://localhost:7039/api/user";
+    private readonly string _productServiceUrl = "https://localhost:7033/api/product";
 
     private static readonly List<Order> Orders = new List<Order>();
 
@@ -30,6 +30,12 @@ public class OrderController : ControllerBase
 
         Orders.Add(order);
         return Ok(order);
+    }
+
+    [HttpGet]
+    public ActionResult<IEnumerable<Order>> GetOrders()
+    {
+        return Ok(Orders);
     }
 
     private async Task<User?> GetUserById(int userId)
